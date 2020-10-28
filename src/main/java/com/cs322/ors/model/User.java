@@ -1,90 +1,86 @@
 package com.cs322.ors.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
-@Table(name  = "User")
-public class User{
+public class User {
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long userId; //PK
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id; // PK
 
-    private String username; //need to define as unique
-    private String password;
-    private String role;
-    private boolean active;
-    private boolean closed;
+	@NotBlank(message = "Username is mandatory")
+	@Size(min = 1)
+	@Column(nullable = false, unique = true)
+	private String username;
 
-    public User(){}
+	@NotBlank(message = "Password is mandatory")
+	@Column(nullable = false)
+	private String password;
 
-    public User(int userId, String username, String password) {
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
-    }
+	@NotBlank(message = "Account type is mandatory")
+	private String role;
+	private boolean closed;
+	
+	public User() {}
+	
+	public User(String username, String password, String role) {
+		this.username = username;
+		this.password = password;
+		this.role = role;
+		this.closed = false;
+	}
+	
+	public long getId() {
+		return id;
+	}
 
-    public long getUserId() {
-        return userId;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public String getRole() {
+		return role;
+	}
 
-    public String getRole() {
-        return role;
-    }
+	public void setRole(String role) {
+		this.role = role;
+	}
 
-    public void setRole(String role) {
-        this.role = role;
-    }
+	public boolean isClosed() {
+		return closed;
+	}
 
-    public boolean isActive() {
-        return active;
-    }
+	public void setClosed(boolean closed) {
+		this.closed = closed;
+	}
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public boolean isClosed() {
-        return closed;
-    }
-
-    public void setClosed(boolean closed) {
-        this.closed = closed;
-    }
-
-    @Override
-    public String toString() {
-        return "User [active=" + active + ", closed=" + closed + ", password=" + password + ", role=" + role
-                + ", userId=" + userId + ", username=" + username + "]";
-    }
-
-    
-    //*
-
-
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role + ", closed="
+				+ closed + "]";
+	}
 
 }
